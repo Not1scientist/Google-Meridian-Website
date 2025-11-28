@@ -195,39 +195,51 @@ const HomePage: React.FC = () => {
              <p className="text-meridian-300 text-sm mt-2">Real verified patient reviews</p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
             {/* Review 1 */}
-            <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:bg-white/15 transition-colors flex flex-col">
+            <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:bg-white/15 transition-colors flex flex-col h-full">
               <div className="flex gap-1 mb-4">
                 {[1,2,3,4,5].map(s => <Star key={s} className="h-4 w-4 text-accent-500 fill-current" />)}
               </div>
-              <p className="italic text-lg leading-relaxed mb-6 text-meridian-50 flex-1">
+              <p className="italic text-base leading-relaxed mb-6 text-meridian-50 flex-1">
                 "She really took the time to listen and understand me. I felt at ease during & after the appointment. I would totally recommend seeing her. No complaints."
               </p>
               <div className="flex justify-between items-center border-t border-white/10 pt-4">
-                <p className="font-bold text-accent-400">Courtney S.</p>
+                <p className="font-bold text-accent-400">C. S.</p>
                 <div className="flex items-center gap-2 text-xs text-meridian-300">
                   <span>Verified Patient</span>
-                  <span>•</span>
-                  <span>June 19, 2024</span>
                 </div>
               </div>
             </div>
 
             {/* Review 2 */}
-            <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:bg-white/15 transition-colors flex flex-col">
+            <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:bg-white/15 transition-colors flex flex-col h-full">
               <div className="flex gap-1 mb-4">
                 {[1,2,3,4,5].map(s => <Star key={s} className="h-4 w-4 text-accent-500 fill-current" />)}
               </div>
-              <p className="italic text-lg leading-relaxed mb-6 text-meridian-50 flex-1">
+              <p className="italic text-base leading-relaxed mb-6 text-meridian-50 flex-1">
                 "This was my first appointment with her. She seemed very kind and compassionate and genuinely cared about what I said and listen sometimes that's all person is looking for is to be heard."
               </p>
               <div className="flex justify-between items-center border-t border-white/10 pt-4">
-                <p className="font-bold text-accent-400">Susan K.</p>
+                <p className="font-bold text-accent-400">S. K.</p>
                 <div className="flex items-center gap-2 text-xs text-meridian-300">
                   <span>Verified Patient</span>
-                  <span>•</span>
-                  <span>May 2, 2024</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Review 3 */}
+            <div className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:bg-white/15 transition-colors flex flex-col h-full">
+              <div className="flex gap-1 mb-4">
+                {[1,2,3,4,5].map(s => <Star key={s} className="h-4 w-4 text-accent-500 fill-current" />)}
+              </div>
+              <p className="italic text-base leading-relaxed mb-6 text-meridian-50 flex-1">
+                "...What sets her apart as a provider who has seen multiple people, is the feeling you’re left with, that you’re an individual and not another number. She’s also careful and methodical with her thinking... and never in a rush to prescribe something solely because it’s popular."
+              </p>
+              <div className="flex justify-between items-center border-t border-white/10 pt-4">
+                <p className="font-bold text-accent-400">A. C.</p>
+                <div className="flex items-center gap-2 text-xs text-meridian-300">
+                  <span>Verified Patient</span>
                 </div>
               </div>
             </div>
