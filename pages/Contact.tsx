@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, Mail, MapPin, Clock, Printer } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Printer, Wallet, ShieldCheck } from 'lucide-react';
 
 const ContactPage: React.FC = () => {
   return (
@@ -11,8 +11,10 @@ const ContactPage: React.FC = () => {
         </p>
 
         <div className="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto">
-          {/* Contact Info Card */}
+          {/* Contact Info Column */}
           <div className="lg:w-1/3 space-y-6">
+            
+            {/* Contact Details Card */}
             <div className="bg-meridian-900 text-white p-8 rounded-2xl shadow-xl">
               <h3 className="font-serif text-2xl font-bold mb-6">Contact Information</h3>
               <div className="space-y-6">
@@ -68,6 +70,87 @@ const ContactPage: React.FC = () => {
               </div>
             </div>
 
+            {/* Financial Information Card (New) */}
+            <div className="bg-white p-6 rounded-2xl shadow-md border border-meridian-100">
+              <div className="flex items-center gap-3 mb-4">
+                 <Wallet className="h-6 w-6 text-accent-500" />
+                 <h3 className="font-bold text-meridian-900 text-lg">Financial Information</h3>
+              </div>
+              
+              <div className="space-y-4 text-sm">
+                <div>
+                  <h4 className="font-bold text-meridian-700 mb-1">Self-Pay Rates</h4>
+                  <div className="flex justify-between border-b border-meridian-50 pb-1">
+                    <span>Therapy (55 min)</span>
+                    <span className="font-bold text-accent-600">$150</span>
+                  </div>
+                  <div className="flex justify-between border-b border-meridian-50 pb-1 mt-1">
+                    <span>Psychiatry Initial</span>
+                    <span className="font-bold text-accent-600">$250</span>
+                  </div>
+                   <div className="flex justify-between mt-1">
+                    <span>Psychiatry Follow-up</span>
+                    <span className="font-bold text-accent-600">$150</span>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-meridian-100">
+                  <div className="flex items-center gap-2 mb-2">
+                    <ShieldCheck className="h-4 w-4 text-meridian-500" />
+                    <h4 className="font-bold text-meridian-700">Accepted Insurance</h4>
+                  </div>
+                  <div className="bg-meridian-50 rounded-lg p-3 max-h-48 overflow-y-auto custom-scrollbar">
+                    <ul className="space-y-1 text-xs text-meridian-600">
+                      {[
+                        "AARP Medicare",
+                        "Aetna PPO", 
+                        "Alignment Health Plan",
+                        "All Savers (UHC)",
+                        "Allegiance",
+                        "Allied Benefit Systems",
+                        "Ambetter", 
+                        "Anthem BCBS PPO", 
+                        "Anthem Federal",
+                        "Christian Brothers Services",
+                        "Cigna PPO", 
+                        "Daniel H. Cook Administrators",
+                        "GEHA", 
+                        "GEHA – United Shared Services (UHSS)",
+                        "Health Plans Inc",
+                        "Health Scope / HealthSCOPE Benefits",
+                        "Medica (commercial only)",
+                        "Medicaid FFS", 
+                        "Medicare",
+                        "Meritain Health",
+                        "Molina Healthcare",
+                        "Nippon",
+                        "Optum", 
+                        "Oscar",
+                        "Oxford",
+                        "Paragon Benefits",
+                        "Professional Benefit Administrators",
+                        "Southwest Service Administrators",
+                        "S&S Healthcare Strategies",
+                        "Surest (formerly Bind)",
+                        "Tall Tree Administrators",
+                        "Tricare",
+                        "Trustmark",
+                        "Trustmark Small Business Benefits",
+                        "UHC Student Resources",
+                        "UMR",
+                        "UnitedHealthcare",
+                        "UnitedHealth Shared Services (UHSS)",
+                        "Wellcare by Allwell",
+                        "Wellfleet Group, LLC"
+                      ].sort().map((ins, i) => (
+                        <li key={i}>{ins}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="bg-white p-6 rounded-2xl shadow-md border border-meridian-100">
               <h4 className="font-bold text-meridian-900 mb-2">Emergency Assistance</h4>
               <p className="text-sm text-meridian-600 leading-relaxed">
@@ -80,7 +163,7 @@ const ContactPage: React.FC = () => {
 
           {/* Contact Form */}
           <div className="lg:w-2/3">
-            <div className="bg-white p-8 md:p-10 rounded-2xl shadow-lg border border-meridian-100">
+            <div className="bg-white p-8 md:p-10 rounded-2xl shadow-lg border border-meridian-100 h-full">
               <h3 className="font-serif text-2xl font-bold text-meridian-900 mb-6">Request an Appointment</h3>
               <form className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

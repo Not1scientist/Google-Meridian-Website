@@ -1,72 +1,89 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, BadgeCheck, X, Quote, Upload, User, ImagePlus, RefreshCw } from 'lucide-react';
+import { Search, Filter, BadgeCheck, X, Quote, User, Camera } from 'lucide-react';
 import { ServiceType, Therapist } from '../types';
 
-// Custom Image Component
+// Simple, robust image component that handles errors gracefully
 const MemberImage: React.FC<{
   src: string;
   alt: string;
   className?: string;
   isPersonal?: boolean;
-  overrideSrc?: string;
-  onUpload?: (file: File) => void;
-}> = ({ src, alt, className, isPersonal, overrideSrc, onUpload }) => {
+}> = ({ src, alt, className, isPersonal }) => {
   const [hasError, setHasError] = useState(false);
-  
-  // Use the override source (blob/base64) if available, otherwise the default src
-  const displaySrc = overrideSrc || src;
+  const [uploadedPreview, setUploadedPreview] = useState<string | null>(null);
 
-  // Reset error state when the source changes
+  // Check if there is a preview in local storage on mount (for "preview mode")
   useEffect(() => {
-    setHasError(false);
-  }, [displaySrc]);
+    // This is strictly for the AI Studio "preview" experience requested by user.
+    // In production, this effect does nothing if keys don't match.
+    try {
+      // We map the expected filename to a localStorage key
+      const filename = src.split('/').pop() || '';
+      const cached = localStorage.getItem(`meridian_img_${filename}`);
+      if (cached) {
+        setUploadedPreview(cached);
+        setHasError(false); // Reset error if we found a cache
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, [src]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && onUpload) {
-      onUpload(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result as string;
+        setUploadedPreview(result);
+        setHasError(false);
+        // Save to local storage for persistence across reloads in this session
+        try {
+           const filename = src.split('/').pop() || '';
+           localStorage.setItem(`meridian_img_${filename}`, result);
+        } catch (err) {
+           console.error("Storage failed", err);
+        }
+      };
+      reader.readAsDataURL(file);
     }
   };
 
-  // State 1: Image load failed (File not found on server) AND no local preview set
-  if (hasError && !overrideSrc) {
+  // Determine what to show: Uploaded Preview -> Static Src -> Fallback
+  const displaySrc = uploadedPreview || src;
+
+  // If the file isn't found and no preview exists, show "Initials"
+  if (hasError && !uploadedPreview) {
     return (
-      <div className={`bg-meridian-50 flex flex-col items-center justify-center text-meridian-400 p-4 text-center border-2 border-dashed border-meridian-200 w-full h-full min-h-[200px]`}>
-        {isPersonal ? <User className="h-8 w-8 mb-2 opacity-50" /> : <ImagePlus className="h-8 w-8 mb-2 opacity-50" />}
-        <span className="text-[10px] font-bold uppercase tracking-wider text-meridian-500 mb-1">
-          Upload Photo
-        </span>
-        <span className="text-[10px] text-meridian-400 mb-3 leading-tight px-2 max-w-[200px]">
-          Waiting for <strong>{src.replace(/^\//, '')}</strong>. Save to <code>public/</code> folder or upload below to save in browser.
+      <div className={`bg-meridian-100 flex flex-col items-center justify-center text-meridian-400 p-4 text-center w-full h-full min-h-[200px] relative group`}>
+        {isPersonal ? <User className="h-12 w-12 mb-2 text-meridian-300" /> : <span className="text-4xl font-serif font-bold text-meridian-300">{alt.split(' ').map(n => n[0]).join('').substring(0,2)}</span>}
+        <span className="text-[10px] text-meridian-400 mt-2 px-2 max-w-[200px]">
+          Image not found: <br/>
+          <code className="text-accent-600 font-bold">{src}</code>
         </span>
         
-        <label className="cursor-pointer bg-accent-500 hover:bg-accent-600 text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-md transition-all hover:scale-105 flex items-center gap-2">
-           <Upload className="h-3 w-3" />
-           Upload Preview
-           <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+        {/* Upload Button for Preview Mode */}
+        <label className="absolute bottom-2 right-2 bg-white/80 hover:bg-white text-meridian-800 p-2 rounded-full cursor-pointer shadow-sm transition-all opacity-0 group-hover:opacity-100" title="Upload Preview">
+          <Camera className="h-4 w-4" />
+          <input type="file" className="hidden" accept="image/*" onChange={handleFileUpload} />
         </label>
       </div>
     );
   }
 
-  // State 2: Displaying Image (Either from server or local preview)
   return (
-    <div className="relative w-full h-full group overflow-hidden">
+    <div className="relative group w-full h-full">
       <img
         src={displaySrc}
         alt={alt}
         className={className}
         onError={() => setHasError(true)}
       />
-      
-      {/* Edit Overlay - Visible on Hover */}
-      <div className="absolute inset-0 bg-meridian-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-20">
-         <label className="cursor-pointer bg-white text-meridian-900 px-4 py-2 rounded-full text-xs font-bold shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 flex items-center gap-2 hover:bg-meridian-50">
-           <RefreshCw className="h-3 w-3" />
-           Change Photo
-           <input type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
-        </label>
-      </div>
+      {/* Upload Button for Preview Mode (even if image exists) */}
+      <label className="absolute bottom-2 right-2 bg-white/80 hover:bg-white text-meridian-800 p-2 rounded-full cursor-pointer shadow-sm transition-all opacity-0 group-hover:opacity-100 z-10" title="Change Photo (Preview)">
+        <Camera className="h-4 w-4" />
+        <input type="file" className="hidden" accept="image/*" onChange={handleFileUpload} />
+      </label>
     </div>
   );
 };
@@ -77,8 +94,13 @@ const MOCK_TEAM: Therapist[] = [
     name: 'Amy Wise',
     title: 'MSN, APRN, PMHNP-BC',
     specialties: [ServiceType.PSYCHIATRY, ServiceType.INDIVIDUAL],
-    bio: 'Amy Wise is a dedicated Psychiatric Nurse Practitioner specializing in psychiatric assessment, medication management, and therapeutic interventions. She brings a holistic mind-body approach to care, guided by empathy and extensive clinical experience.',
+    bio: 'Amy Wise is a dedicated Psychiatric Nurse Practitioner specializing in Medication Management and Brief Individual Supportive Therapy. She brings a holistic mind-body approach to care, guided by empathy and extensive clinical experience.',
     fullBio: [
+      {
+        title: "Clinical Services",
+        content: `• Medication Management
+• Brief Individual Supportive Therapy`
+      },
       {
         title: "Professional Experience",
         content: `Amy Wise, MSN, APRN, PMHNP-BC
@@ -106,8 +128,9 @@ Amy's journey in Christianity has become a significant aspect of her life, guidi
         content: `Amy loves to travel and finds joy in exploring new places. She enjoys trips to California to visit various theme parks and the ocean. The Colorado Mountains hold a special place in her heart, providing a serene escape and a connection to nature. Most recently, Amy traveled to Myrtle Beach, South Carolina, where she enjoyed the beautiful coastline and vibrant culture.`
       }
     ],
-    imageUrl: '/amy-wise-profile.jpg', 
-    personalImageUrl: '/amy-wise-personal.jpg',
+    // STATIC FILE PATHS - Upload these exact filenames to your root folder
+    imageUrl: 'amy-wise-profile2.jpg', 
+    personalImageUrl: 'amy-wise-personal.jpg',
     available: true
   },
   {
@@ -162,9 +185,44 @@ Derek has faced his own personal challenges, which have given him a profound und
         content: `Derek enjoys spending time with his family and exploring new places. He finds joy in outdoor activities such as swimming, live sporting events, concerts, gun range, and traveling. The mountains hold a special place in his heart, providing a serene escape and a connection to nature.`
       }
     ],
+    // STATIC FILE PATHS
     imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800',
-    // Added personal image for Derek
-    personalImageUrl: '/derek-wise-personal.jpg',
+    personalImageUrl: 'https://aistudiocdn.com/derek-wise-personal-profile.jpg',
+    available: true
+  },
+  {
+    id: 'maribel-zehnder',
+    name: 'Maribel Zehnder',
+    title: 'CPC-Intern',
+    specialties: [ServiceType.CHILDREN, ServiceType.FAMILY, ServiceType.INDIVIDUAL, ServiceType.COUPLES],
+    bio: 'Maribel Zehnder is a Clinical Professional Counselor Intern specializing in child and family therapy. Trained as a psychologist in Mexico, she brings extensive multicultural experience and expertise in Gestalt and Mindfulness therapies to clients ages 5 to 99. Fluent in Spanish.',
+    fullBio: [
+      {
+        title: "Professional Experience",
+        content: `Maribel Zehnder brings a unique and extensive background to Meridian Behavioral Health. Before establishing her career in the United States, Maribel was trained and practiced as a psychologist in Mexico for many years. This international experience has provided her with a deep understanding of diverse cultural backgrounds and family dynamics.
+
+Now practicing as a Clinical Professional Counselor Intern in Las Vegas, Maribel integrates her rich history of clinical work with her current licensure. She specializes in working with children (ages 5+), adolescents, and families, helping them navigate developmental hurdles, behavioral issues, and emotional disconnects.
+
+She has been very successful in helping clients transition through life stages, drawing on her own experience moving to the United States and starting a family here.`
+      },
+      {
+        title: "Therapeutic Approach",
+        content: `Maribel's approach is grounded in Gestalt Therapy and Mindfulness. She believes in helping clients gain awareness of the present moment ("here and now") to resolve unfinished business and improve emotional regulation.
+
+Her mindfulness training allows her to teach practical skills for anxiety and stress management, which is particularly effective for both children and adults. She works collaboratively with families to ensure the home environment supports the growth achieved in therapy.`
+      },
+      {
+        title: "Specializations",
+        content: `Child & Adolescent Therapy (Ages 5+)
+Family Systems Therapy
+Gestalt Therapy
+Mindfulness-Based Interventions
+Multicultural Counseling
+Bilingual Services (English/Spanish)`
+      }
+    ],
+    // STATIC FILE PATHS - You will need to upload maribel-zehnder-profile.jpg
+    imageUrl: 'maribel-zehnder-profile.jpg',
     available: true
   }
 ];
@@ -174,29 +232,6 @@ const TeamPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMember, setSelectedMember] = useState<Therapist | null>(null);
   
-  // Store overridden images (uploaded previews) in state
-  const [imageOverrides, setImageOverrides] = useState<Record<string, string>>({});
-
-  // Load saved images from LocalStorage on mount
-  useEffect(() => {
-    const savedImages: Record<string, string> = {};
-    MOCK_TEAM.forEach(member => {
-      // Check professional profile
-      const profKey = `${member.id}-profile`;
-      const savedProf = localStorage.getItem(profKey);
-      if (savedProf) savedImages[profKey] = savedProf;
-
-      // Check personal profile
-      const persKey = `${member.id}-personal`;
-      const savedPers = localStorage.getItem(persKey);
-      if (savedPers) savedImages[persKey] = savedPers;
-    });
-    
-    if (Object.keys(savedImages).length > 0) {
-      setImageOverrides(prev => ({ ...prev, ...savedImages }));
-    }
-  }, []);
-
   const filteredTeam = MOCK_TEAM.filter(member => {
     const matchesFilter = filter === 'All' || member.specialties.some(s => s === filter);
     const matchesSearch = member.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -212,31 +247,6 @@ const TeamPage: React.FC = () => {
     }
     return () => { document.body.style.overflow = 'unset'; };
   }, [selectedMember]);
-
-  const handleImageUpload = (key: string, file: File) => {
-    // 1. Create a FileReader to read the file as a base64 string
-    const reader = new FileReader();
-    
-    reader.onloadend = () => {
-      const base64String = reader.result as string;
-      
-      // 2. Save to LocalStorage for persistence
-      try {
-        localStorage.setItem(key, base64String);
-      } catch (e) {
-        console.error("Storage full or error saving image", e);
-        alert("Image too large to save to browser memory, but it will display for this session.");
-      }
-
-      // 3. Update state to show immediately
-      setImageOverrides(prev => ({
-        ...prev,
-        [key]: base64String
-      }));
-    };
-
-    reader.readAsDataURL(file);
-  };
 
   return (
     <div className="min-h-screen bg-meridian-50 pb-20">
@@ -281,21 +291,26 @@ const TeamPage: React.FC = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {filteredTeam.map(member => (
-            <div key={member.id} className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group flex flex-col h-full border border-meridian-100">
+            <div key={member.id} className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 group flex flex-col h-full border border-meridian-100 relative">
+              
+              {/* TOP BANNER FOR STATUS */}
+              <div className="h-2 bg-meridian-900 w-full" />
+              {/* Accepting Patients Banner - Positioned ABSOLUTELY at the top of the IMAGE container in a non-overlapping bar */}
+              <div className="absolute top-2 left-0 right-0 z-20 flex justify-center pointer-events-none">
+                 {member.available && (
+                  <div className="bg-accent-500/90 backdrop-blur-sm text-white text-[10px] font-bold py-1.5 px-6 rounded-full shadow-lg uppercase tracking-widest pointer-events-auto">
+                    Accepting Patients
+                  </div>
+                 )}
+              </div>
+              
               <div className="flex flex-col sm:flex-row h-full">
                 <div className="sm:w-2/5 relative h-64 sm:h-auto overflow-hidden bg-meridian-100">
                   <MemberImage
                     src={member.imageUrl}
                     alt={member.name}
-                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                    overrideSrc={imageOverrides[`${member.id}-profile`]}
-                    onUpload={(file) => handleImageUpload(`${member.id}-profile`, file)}
+                    className="w-full h-full object-contain object-top transition-transform duration-500 group-hover:scale-105 pt-6" 
                   />
-                  {member.available && (
-                    <div className="absolute top-4 left-4 bg-accent-500 text-white text-[10px] font-bold px-2 py-1 rounded shadow-sm uppercase tracking-wide">
-                      Accepting Patients
-                    </div>
-                  )}
                 </div>
                 
                 <div className="p-6 flex flex-col flex-1 sm:w-3/5">
@@ -327,18 +342,6 @@ const TeamPage: React.FC = () => {
             </div>
           ))}
         </div>
-
-        {filteredTeam.length === 0 && (
-          <div className="text-center py-20 text-meridian-500">
-            <p className="text-lg">No specialists found matching your criteria.</p>
-            <button 
-              onClick={() => {setFilter('All'); setSearchTerm('');}}
-              className="mt-4 text-accent-600 font-medium hover:underline"
-            >
-              Clear filters
-            </button>
-          </div>
-        )}
       </div>
 
       {/* Full Profile Modal */}
@@ -348,28 +351,34 @@ const TeamPage: React.FC = () => {
             className="absolute inset-0 bg-meridian-900/60 backdrop-blur-sm transition-opacity" 
             onClick={() => setSelectedMember(null)}
           />
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden relative z-10 animate-in fade-in zoom-in-95 duration-300 flex flex-col md:flex-row">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-5xl h-[90vh] md:h-auto md:max-h-[90vh] flex flex-col md:flex-row overflow-hidden relative z-10 animate-in fade-in zoom-in-95 duration-300">
             
             <button 
               onClick={() => setSelectedMember(null)}
-              className="absolute top-4 right-4 p-2 bg-white/80 rounded-full hover:bg-meridian-100 transition-colors z-20"
+              className="absolute top-4 right-4 p-2 bg-white/80 rounded-full hover:bg-meridian-100 transition-colors z-20 shadow-md"
             >
               <X className="h-6 w-6 text-meridian-800" />
             </button>
 
-            {/* Left Column: Images - Scrollable on mobile, sticky on desktop */}
-            <div className="md:w-1/3 bg-meridian-50 p-6 flex flex-col gap-6 overflow-y-auto md:overflow-visible border-r border-meridian-100">
+            {/* Left Column: Images - Scrollable */}
+            <div className="md:w-1/3 bg-meridian-50 p-6 flex flex-col gap-6 overflow-y-auto max-h-full border-r border-meridian-100 shrink-0 custom-scrollbar">
               <div className="space-y-4">
-                <div className="rounded-xl overflow-hidden shadow-md border border-meridian-200 bg-white">
-                  <div className="aspect-[3/4] w-full">
+                <div className="rounded-xl overflow-hidden shadow-md border border-meridian-200 bg-white relative flex flex-col">
+                  {/* Status Bar */}
+                  {selectedMember.available && (
+                     <div className="bg-accent-500 text-white text-[10px] font-bold py-1.5 text-center shadow-sm uppercase tracking-widest w-full">
+                        Accepting Patients
+                     </div>
+                  )}
+                  {/* Container for image with 'object-contain' to ensure full face visibility */}
+                  <div className="w-full h-[350px] bg-white flex items-center justify-center overflow-hidden">
                     <MemberImage
                       src={selectedMember.imageUrl}
                       alt={selectedMember.name}
-                      className="w-full h-full object-cover object-top"
-                      overrideSrc={imageOverrides[`${selectedMember.id}-profile`]}
-                      onUpload={(file) => handleImageUpload(`${selectedMember.id}-profile`, file)}
+                      className="w-full h-full object-contain object-bottom"
                     />
                   </div>
+                  
                   <div className="bg-white p-2 text-center text-xs font-bold uppercase tracking-wider text-meridian-500 border-t border-meridian-100">
                     Meet Your Clinician
                   </div>
@@ -383,8 +392,6 @@ const TeamPage: React.FC = () => {
                         alt={`${selectedMember.name} Personal`}
                         className="w-full h-full object-cover object-center"
                         isPersonal={true}
-                        overrideSrc={imageOverrides[`${selectedMember.id}-personal`]}
-                        onUpload={(file) => handleImageUpload(`${selectedMember.id}-personal`, file)}
                       />
                     </div>
                     <div className="bg-white p-2 text-center text-xs font-bold uppercase tracking-wider text-meridian-500 border-t border-meridian-100">
@@ -409,8 +416,8 @@ const TeamPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Right Column: Bio Content */}
-            <div className="md:w-2/3 p-8 md:p-12 overflow-y-auto bg-white">
+            {/* Right Column: Bio Content - Scrollable */}
+            <div className="md:w-2/3 p-8 md:p-12 overflow-y-auto bg-white custom-scrollbar">
               <div className="mb-8">
                 <h2 className="font-serif text-4xl font-bold text-meridian-900 mb-2">{selectedMember.name}</h2>
                 <p className="text-xl text-accent-600 font-medium">{selectedMember.title}</p>

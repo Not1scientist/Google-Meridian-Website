@@ -7,6 +7,7 @@ import ServiceDetail from './pages/ServiceDetail';
 import TeamPage from './pages/Team';
 import ResourcesPage from './pages/Resources';
 import ContactPage from './pages/Contact';
+import ArticleDetail from './pages/ArticleDetail';
 
 // ScrollToTop component handles window scrolling on route change
 function ScrollToTop() {
@@ -36,6 +37,7 @@ function App() {
           
           <Route path="/team" element={<TeamPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
+          <Route path="/resources/:id" element={<ArticleDetail />} />
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
       </Layout>

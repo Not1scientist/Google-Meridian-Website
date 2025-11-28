@@ -46,8 +46,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <Link to="/" className="flex flex-col">
-              <span className="font-serif text-2xl font-bold text-meridian-900 leading-none tracking-tight">Meridian</span>
-              <span className="text-xs text-meridian-500 uppercase tracking-[0.2em]">Behavioral Health</span>
+              <span className="font-serif text-3xl md:text-4xl font-bold text-meridian-900 leading-none tracking-tight">Meridian</span>
+              <span className="text-sm text-meridian-500 uppercase tracking-[0.2em] mt-1">Behavioral Health</span>
             </Link>
 
             {/* Desktop Nav */}
@@ -79,6 +79,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
               <NavLink to="/team" label="Our Team" />
               <NavLink to="/resources" label="Resources" />
+              <NavLink to="/contact" label="Contact" />
               <Link 
                 to="/contact" 
                 className="bg-accent-500 hover:bg-accent-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all hover:shadow-md transform hover:-translate-y-0.5"
@@ -116,6 +117,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
             <NavLink to="/team" label="Our Team" />
             <NavLink to="/resources" label="Resources" />
+            <NavLink to="/contact" label="Contact" />
             <Link 
               to="/contact" 
               className="bg-accent-500 text-white px-4 py-3 rounded-md text-center font-semibold mt-2"
@@ -146,7 +148,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div>
               <h4 className="font-bold mb-6 text-accent-500 text-sm uppercase tracking-widest">Therapy & Programs</h4>
               <ul className="space-y-3 text-meridian-200 text-sm">
-                <li><Link to="/programs/adult-trauma" className="hover:text-white transition-colors">Adult Trauma & EMDR</Link></li>
+                <li><Link to="/programs/adult-trauma" className="hover:text-white transition-colors">Trauma, Anxiety & EMDR</Link></li>
                 <li><Link to="/programs/couple-marriage" className="hover:text-white transition-colors">Couple & Marriage Therapy</Link></li>
                 <li><Link to="/programs/child-adolescent" className="hover:text-white transition-colors">Child & Adolescent</Link></li>
                 <li><Link to="/programs/psychiatry" className="hover:text-white transition-colors">Psychiatry & Medication</Link></li>
@@ -159,7 +161,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <li><Link to="/team" className="hover:text-white transition-colors">Find a Therapist</Link></li>
                 <li><Link to="/resources" className="hover:text-white transition-colors">Patient Resources</Link></li>
                 <li><Link to="/contact" className="hover:text-white transition-colors">Make a Payment</Link></li>
-                <li><Link to="/contact" className="hover:text-white transition-colors">Insurance Info</Link></li>
+                <li><Link to="/resources" className="hover:text-white transition-colors">Insurance Info</Link></li>
                 <li><Link to="/contact" className="hover:text-white transition-colors">Careers</Link></li>
               </ul>
             </div>

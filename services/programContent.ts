@@ -3,9 +3,9 @@ import { ProgramDetail } from "../types";
 export const PROGRAMS: Record<string, ProgramDetail> = {
   "adult-trauma": {
     id: "adult-trauma",
-    title: "Adult Trauma & EMDR",
-    shortDescription: "Specialized treatment for PTSD, anxiety, and past trauma using evidence-based EMDR therapy.",
-    fullDescription: "Trauma can leave a lasting imprint on the mind and body, affecting how you see the world and interact with others. It often manifests not just as flashbacks, but as chronic anxiety, panic attacks, or difficulty trusting others in relationships. At Meridian Behavioral Health, we specialize in helping adults process and heal from these experiences.\n\nWe utilize Eye Movement Desensitization and Reprocessing (EMDR), a gold-standard, evidence-based psychotherapy method. EMDR helps the brain 'digest' stuck memories, allowing you to move forward without the intense emotional or physical reactivity that trauma often causes.",
+    title: "Trauma, Anxiety & EMDR",
+    shortDescription: "Specialized treatment for PTSD, anxiety, panic, and relationships using evidence-based EMDR therapy. Helping individuals restore safety and control.",
+    fullDescription: "Trauma can leave a lasting imprint on the mind and body, affecting how you see the world and interact with others. It often manifests not just as flashbacks, but as chronic anxiety, panic attacks, or difficulty trusting others in relationships. At Meridian Behavioral Health, we specialize in helping individuals process and heal from these experiences.\n\nWe utilize Eye Movement Desensitization and Reprocessing (EMDR), a gold-standard, evidence-based psychotherapy method. EMDR helps the brain 'digest' stuck memories, allowing you to move forward without the intense emotional or physical reactivity that trauma often causes. This approach is highly effective for both adults and adolescents.",
     heroImage: "https://images.unsplash.com/photo-1527137342181-19aab11a8ee8?auto=format&fit=crop&q=80&w=1200",
     features: [
       "Early Childhood Trauma",
@@ -45,6 +45,32 @@ export const PROGRAMS: Record<string, ProgramDetail> = {
       {
         question: "Will I feel worse before I feel better?",
         answer: "It is common to feel some emotional fatigue as you begin to process difficult memories. However, our first priority is 'resourcing'—giving you the tools to manage distress before we ever dive into the deeper work, ensuring you feel supported throughout."
+      }
+    ]
+  },
+  "emerging-adults": {
+    id: "emerging-adults",
+    title: "Emerging Adults (Ages 18-29)",
+    shortDescription: "Clinical treatment for adjustment disorders, anxiety, and difficulties with life direction and autonomy.",
+    fullDescription: "The transition to adulthood is a critical developmental period often accompanied by significant psychological distress. Our program treats the clinical symptoms of anxiety, depression, and adjustment disorders that can arise during this phase.\n\nRather than simple coaching, we provide evidence-based psychotherapy to address what is sometimes described as 'failure to launch'—difficulty moving toward independent adult roles—as well as severe performance anxiety and the emotional dysregulation often triggered by academic or career pressures. Our clinicians draw from cognitive behavioral therapy (CBT), DBT-informed skills training, and trauma-informed approaches tailored to this age group. Treatment is guided by the young adult’s own goals and values, not just the expectations of family, school, or work.",
+    // New wholesome outdoor image, no alcohol
+    heroImage: "https://images.unsplash.com/photo-1445307840113-507696a63050?auto=format&fit=crop&q=80&w=1200",
+    features: [
+      "Adjustment Disorder Treatment",
+      "Anxiety & Stress Management",
+      "Building Independence & Autonomy",
+      "Executive Function Skills"
+    ],
+    benefits: [
+      "Reduction in clinical anxiety symptoms",
+      "Improved emotional regulation",
+      "Clarification of personal values",
+      "Development of autonomous coping skills"
+    ],
+    faqs: [
+      {
+        question: "Is this life coaching?",
+        answer: "No. This is clinical psychotherapy designed to treat the anxiety, depression, and adjustment disorders that often hinder a young adult's ability to function independently."
       }
     ]
   },
@@ -106,31 +132,6 @@ export const PROGRAMS: Record<string, ProgramDetail> = {
       }
     ]
   },
-  "emerging-adults": {
-    id: "emerging-adults",
-    title: "Emerging Adults",
-    shortDescription: "Clinical treatment for adjustment disorders, anxiety, and difficulties with life direction and autonomy (ages 18-29).",
-    fullDescription: "The transition to adulthood is a critical developmental period often accompanied by significant psychological distress. Our program treats the clinical symptoms of anxiety, depression, and adjustment disorders that can arise during this phase.\n\nRather than simple coaching, we provide evidence-based psychotherapy to address what is sometimes described as 'failure to launch'—difficulty moving toward independent adult roles—as well as severe performance anxiety and the emotional dysregulation often triggered by academic or career pressures. Our clinicians draw from cognitive behavioral therapy (CBT), DBT-informed skills training, and trauma-informed approaches tailored to this age group. Treatment is guided by the young adult’s own goals and values, not just the expectations of family, school, or work.",
-    heroImage: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=1200",
-    features: [
-      "Adjustment Disorder Treatment",
-      "Anxiety & Stress Management",
-      "Core Values & Autonomy",
-      "Executive Function & Direction"
-    ],
-    benefits: [
-      "Reduction in clinical anxiety symptoms",
-      "Improved emotional regulation",
-      "Clarification of personal values",
-      "Development of autonomous coping skills"
-    ],
-    faqs: [
-      {
-        question: "Is this life coaching?",
-        answer: "No. This is clinical psychotherapy designed to treat the anxiety, depression, and adjustment disorders that often hinder a young adult's ability to function independently."
-      }
-    ]
-  },
   "family-therapy": {
     id: "family-therapy",
     title: "Family Therapy",
@@ -160,7 +161,7 @@ export const PROGRAMS: Record<string, ProgramDetail> = {
     id: "individual-therapy",
     title: "Individual Therapy",
     shortDescription: "One-on-one sessions to explore personal challenges and foster growth.",
-    fullDescription: "Individual therapy is a collaborative process between you and your therapist. It is a dedicated time to focus entirely on you—your thoughts, your feelings, and your goals.\n\nWe treat a wide range of conditions including depression, generalized anxiety, social anxiety, and stress. Using modalities like Cognitive Behavioral Therapy (CBT), Acceptance and Commitment Therapy (ACT), and solution-focused approaches, we help you understand your internal world and develop practical tools to improve your quality of life.",
+    fullDescription: "Individual therapy is a collaborative process between you and your therapist. It is a dedicated time to focus entirely on you—your thoughts, your feelings, and your goals.\n\nWe treat a wide range of conditions including depression, generalized anxiety, social anxiety, and stress. We primarily utilize **Eye Movement Desensitization and Reprocessing (EMDR)** and **Cognitive Behavioral Therapy (CBT)**, while also incorporating **Acceptance and Commitment Therapy (ACT)** and solution-focused approaches. This blend of evidence-based modalities helps you understand your internal world and develop practical tools to improve your quality of life.",
     heroImage: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?auto=format&fit=crop&q=80&w=1200",
     features: [
       "Depression & Anxiety Treatment",
