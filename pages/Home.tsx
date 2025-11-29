@@ -19,8 +19,8 @@ const HomePage: React.FC = () => {
       <section className="relative h-[600px] flex items-center bg-meridian-900 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1920" 
-            alt="Warm and professional therapy office" 
+            src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=1920" 
+            alt="Compassionate therapy session" 
             className="w-full h-full object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-meridian-900 via-meridian-900/90 to-transparent" />
@@ -205,7 +205,7 @@ const HomePage: React.FC = () => {
                 "She really took the time to listen and understand me. I felt at ease during & after the appointment. I would totally recommend seeing her. No complaints."
               </p>
               <div className="flex justify-between items-center border-t border-white/10 pt-4">
-                <p className="font-bold text-accent-400">C. S.</p>
+                <p className="font-bold text-accent-400">C.S.</p>
                 <div className="flex items-center gap-2 text-xs text-meridian-300">
                   <span>Verified Patient</span>
                 </div>
@@ -221,7 +221,7 @@ const HomePage: React.FC = () => {
                 "This was my first appointment with her. She seemed very kind and compassionate and genuinely cared about what I said and listen sometimes that's all person is looking for is to be heard."
               </p>
               <div className="flex justify-between items-center border-t border-white/10 pt-4">
-                <p className="font-bold text-accent-400">S. K.</p>
+                <p className="font-bold text-accent-400">S.K.</p>
                 <div className="flex items-center gap-2 text-xs text-meridian-300">
                   <span>Verified Patient</span>
                 </div>
@@ -237,7 +237,7 @@ const HomePage: React.FC = () => {
                 "...What sets her apart as a provider who has seen multiple people, is the feeling you’re left with, that you’re an individual and not another number. She’s also careful and methodical with her thinking... and never in a rush to prescribe something solely because it’s popular."
               </p>
               <div className="flex justify-between items-center border-t border-white/10 pt-4">
-                <p className="font-bold text-accent-400">A. C.</p>
+                <p className="font-bold text-accent-400">A.C.</p>
                 <div className="flex items-center gap-2 text-xs text-meridian-300">
                   <span>Verified Patient</span>
                 </div>
