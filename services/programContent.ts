@@ -1,6 +1,35 @@
 import { ProgramDetail } from "../types";
 
 export const PROGRAMS: Record<string, ProgramDetail> = {
+  "emdr-intensives": {
+    id: "emdr-intensives",
+    title: "EMDR Intensives",
+    shortDescription: "Accelerate your healing with extended, focused EMDR sessions designed to provide months of progress in just days.",
+    fullDescription: "Standard weekly therapy is effective, but sometimes you need relief sooner. EMDR Intensives are designed for individuals who want to accelerate their healing process. Instead of 50-minute sessions spread over months, we dedicate extended blocks of time—half-days or multiple days—to deeply process trauma and anxiety without interruption.\n\nThis format reduces the 'start-up' and 'wind-down' time of typical sessions, allowing us to stay in the healing zone longer. It is particularly effective for those traveling from out of town, busy professionals, or anyone wanting to see significant shifts quickly.",
+    heroImage: "https://images.unsplash.com/photo-1544367563-12123d8965cd?auto=format&fit=crop&q=80&w=1200",
+    features: [
+      "Accelerated Treatment Timeline",
+      "Extended 3-6 Hour Sessions",
+      "Reduced Overall Treatment Time",
+      "Ideal for Complex Trauma"
+    ],
+    benefits: [
+      "Months of therapy in a few days",
+      "No weekly schedule commitment",
+      "Deep, uninterrupted processing",
+      "Faster return to daily life"
+    ],
+    faqs: [
+      {
+        question: "Is an intensive right for me?",
+        answer: "Intensives are great if you have a specific traumatic event to process or if you feel 'stuck' in weekly therapy. We will conduct a screening to ensure you have the coping skills necessary for this focused work."
+      },
+      {
+        question: "Does insurance cover intensives?",
+        answer: "Typically, insurance does not cover extended sessions (intensives). These are usually self-pay services. We can discuss payment plans and package options."
+      }
+    ]
+  },
   "adult-trauma": {
     id: "adult-trauma",
     title: "Trauma, Anxiety & EMDR",
@@ -53,7 +82,6 @@ export const PROGRAMS: Record<string, ProgramDetail> = {
     title: "Emerging Adults (Ages 18-29)",
     shortDescription: "Clinical treatment for adjustment disorders, anxiety, and difficulties with life direction and autonomy.",
     fullDescription: "The transition to adulthood is a critical developmental period often accompanied by significant psychological distress. Our program treats the clinical symptoms of anxiety, depression, and adjustment disorders that can arise during this phase.\n\nRather than simple coaching, we provide evidence-based psychotherapy to address what is sometimes described as 'failure to launch'—difficulty moving toward independent adult roles—as well as severe performance anxiety and the emotional dysregulation often triggered by academic or career pressures. Our clinicians draw from cognitive behavioral therapy (CBT), DBT-informed skills training, and trauma-informed approaches tailored to this age group. Treatment is guided by the young adult’s own goals and values, not just the expectations of family, school, or work.",
-    // New wholesome outdoor image, no alcohol
     heroImage: "https://images.unsplash.com/photo-1445307840113-507696a63050?auto=format&fit=crop&q=80&w=1200",
     features: [
       "Adjustment Disorder Treatment",
@@ -186,7 +214,7 @@ export const PROGRAMS: Record<string, ProgramDetail> = {
     id: "psychiatry",
     title: "Psychiatry & Medication",
     shortDescription: "Medical management of mental health conditions by board-certified practitioners.",
-    fullDescription: "Sometimes, therapy alone is not enough to manage the symptoms of mental health conditions. In these cases, medication can be a vital tool. Our psychiatric services are led by board-certified practitioners who specialize in the assessment, diagnosis, and treatment of mental health disorders.\n\nWe take a conservative, holistic approach to medication. We believe in 'start low and go slow,' ensuring that medication supports your therapy rather than replacing it. We provide thorough evaluations and ongoing monitoring to ensure safety and effectiveness.",
+    fullDescription: "Sometimes, therapy alone is not enough to manage the symptoms of mental health conditions. In these cases, medication can be a vital tool. Our psychiatric services are led by board-certified practitioners who specialize in the assessment, diagnosis, and treatment of mental health disorders.\n\nWe take a conservative, holistic approach to medication. We believe in 'start low and go slow,' ensuring that medication supports your therapy rather than replacing it. We provide thorough evaluations and ongoing monitoring to ensure safety and effectiveness.\n\n**Our Approach to Medication & Safety**\n\n**The Synergy of Therapy & Medication**\nWhile psychopharmacology (medication) can be highly effective in reducing symptoms, it is rarely a complete cure on its own. Medication prepares the brain for change, but therapy facilitates that change.\n\nWe strongly advocate for combining medication management with psychotherapy. This integrated approach leads to the best long-term outcomes, as therapy helps address the behavioral patterns, trauma, and environmental factors that medication alone cannot resolve.\n\n**Responsible Prescribing Standards**\nAt Meridian Behavioral Health, we prioritize patient safety in all prescribing decisions. Schedule II controlled substances (such as medication for ADHD or anxiety) are prescribed conscientiously and strictly for indicated medical conditions.\n\nWe maintain conservative prescribing standards and conduct thorough ongoing assessments to ensure these medications remain a safe and effective part of your overall treatment plan.",
     heroImage: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=1200",
     features: [
       "Psychiatric Evaluation",

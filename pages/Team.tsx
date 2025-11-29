@@ -185,9 +185,9 @@ Derek has faced his own personal challenges, which have given him a profound und
         content: `Derek enjoys spending time with his family and exploring new places. He finds joy in outdoor activities such as swimming, live sporting events, concerts, gun range, and traveling. The mountains hold a special place in his heart, providing a serene escape and a connection to nature.`
       }
     ],
-    // STATIC FILE PATHS
-    imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=800',
-    personalImageUrl: 'https://aistudiocdn.com/derek-wise-personal-profile.jpg',
+    // STATIC FILE PATHS - Upload these exact filenames to your root folder
+    imageUrl: 'derek-wise-profile.jpg',
+    personalImageUrl: 'derek-wise-personal.jpg',
     available: true
   },
   {
